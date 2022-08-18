@@ -29,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
- _channel.stream.listen((event) {
+    _channel.stream.listen((event) {
       updateList(Data.fromJson(jsonDecode(event)));
     });
 
@@ -45,17 +45,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void updateList(Data data) {
     setState(() {
-      if(showvalue == false) {
-  if (userList.length <= 5) {
+      if (showvalue == false) {
+        if (userList.length <= 5) {
+          userList = [data, ...userList];
+          return;
+        }
+        userList.removeAt(userList.length - 1);
         userList = [data, ...userList];
-        return;
-      }
-      userList.removeAt(userList.length - 1);
-      userList = [data, ...userList];
       } else {
         userList;
       }
-    
     });
   }
 
