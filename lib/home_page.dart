@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -45,16 +46,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void updateList(Data data) {
     setState(() {
-      if (showvalue == false) {
-        if (userList.length <= 5) {
-          userList = [data, ...userList];
-          return;
-        }
-        userList.removeAt(userList.length - 1);
+      if (showvalue) return;
+
+      if (userList.length <= 5) {
         userList = [data, ...userList];
-      } else {
-        userList;
+        return;
       }
+
+      userList.removeAt(userList.length - 1);
+      userList = [data, ...userList];
     });
   }
 
@@ -88,7 +88,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 children: [
                                   Text(e.username!),
                                   Text(e.email!),
-                                  Text(e.birthdate!),
+                                  Text(DateFormat("yyyy-MM-dd")
+                                      .format(DateTime.parse(e.birthdate!))),
                                 ],
                               ),
                             ],
