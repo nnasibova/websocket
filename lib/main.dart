@@ -1,9 +1,25 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-
+import 'package:websocket_proje/awesome_notification.dart';
 import 'home_page.dart';
+import 'notification_example.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  AwesomeNotifications().initialize('resource://drawable/ic_launcher', [
+    // notification icon
+    NotificationChannel(
+      channelGroupKey: 'basic_test',
+      channelKey: 'basic',
+      channelName: 'Basic notifications',
+      channelDescription: 'Notification channel for basic tests',
+      channelShowBadge: true,
+      importance: NotificationImportance.High,
+      enableVibration: true,
+    ),
+  ]);
+
   runApp(const MyApp());
 }
 
@@ -12,14 +28,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const title = 'WebSocket Demo';
-
+    AwesomeNotifications().actionStream.listen((action) {
+      if (action.buttonKeyPressed == "open") {
+        print("Open button is pressed");
+      } else if (action.buttonKeyPressed == "delete") {
+        print("Delete button is pressed.");
+      } else {
+        print(action.payload); //notification was pressed
+      }
+    });
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: NotificationAwesome(),
     );
   }
 }
