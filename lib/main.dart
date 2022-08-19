@@ -29,10 +29,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AwesomeNotifications().actionStream.listen((action) {
-      if (action.buttonKeyPressed == "open") {
-        print("Open button is pressed");
-      } else if (action.buttonKeyPressed == "delete") {
-        print("Delete button is pressed.");
+      if (action.buttonKeyPressed == "Yes") {
+        print("Yes button is pressed");
+      } else if (action.buttonKeyPressed == "No") {
+        print("No button is pressed.");
       } else {
         print(action.payload); //notification was pressed
       }
